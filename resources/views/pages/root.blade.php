@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.app')
 @section('tilte','首页')
 @section('content')
     <h1>这里是首页</h1>
