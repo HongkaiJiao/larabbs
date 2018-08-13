@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth',['except' => ['show']]);
+    }
+
     // 显示用户个人信息页面
     public function show(User $user)
     {
@@ -18,12 +23,14 @@ class UsersController extends Controller
     // 个人资料编辑页面
     public function edit(User $user)
     {
+        $this->authorize('update',$user);
         return view('users.edit',compact('user'));
     }
 
     // 个人资料更新--使用自定义的表单请求验证
     public function update(UserRequest $request,ImageUploadHandler $uploader,User $user)
     {
+        $this->authorize('update',$user);
         //dd($request->avatar);
         // 获取表单信息
         $data = $request->all();
