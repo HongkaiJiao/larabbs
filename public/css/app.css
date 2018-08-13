@@ -8370,14 +8370,16 @@ body {
 
 /* Sticky footer styles */
 
-html {
-  position: relative;
+html,
+body {
   height: 100%;
 }
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+#app {
+  min-height: 100%;
+  position: relative;
+  /* Padding bottom by footer height*/
+  padding-bottom: 60.4px;
 }
 
 .footer {
