@@ -8,6 +8,7 @@ class PagesController extends Controller
 {
     public function root()
     {
+        //dd(config('my.KEVIN'));
         return view('pages.root');
     }
 }
