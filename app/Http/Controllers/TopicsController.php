@@ -14,10 +14,10 @@ class TopicsController extends Controller
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
-	public function index()
+	public function index(Request $request,Topic $topic)
 	{
-	    // 使用预加载，避免N+1此查询问题，提高查询效率
-		$topics = Topic::with('user','category')->paginate(30);
+	    // 此处 $request->order 是获取 URI http://larabbs.test/topics?order=recent 中的 order 参数
+		$topics = $topic->withOrder($request->order)->paginate(30);
 		return view('topics.index', compact('topics'));
 	}
 
