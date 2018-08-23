@@ -26,4 +26,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    // 一个作者拥有多个主题的一对多关系，用来获取到用户发布的所有话题数据
+    public function topics()
+    {
+        return $this->hasMany(Topic::class);
+    }
 }
