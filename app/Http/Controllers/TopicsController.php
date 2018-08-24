@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TopicRequest;
+use Auth;
 
 class TopicsController extends Controller
 {
     public function __construct()
     {
+        // 对除了 index() 和 show() 以外的方法使用 auth 中间件进行认证
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
@@ -28,12 +31,17 @@ class TopicsController extends Controller
 
 	public function create(Topic $topic)
 	{
-		return view('topics.create_and_edit', compact('topic'));
+	    // 读取所有分类并传参至模板页
+	    $categories = Category::all();
+		return view('topics.create_and_edit', compact('topic','categories'));
 	}
 
-	public function store(TopicRequest $request)
+	public function store(TopicRequest $request,Topic $topic)
 	{
-		$topic = Topic::create($request->all());
+	    // fill 方法可以将传参的键值数组填充到模型的属性中
+		$topic->fill($request->all());
+		$topic->user_id = Auth::id(); // 获取当前登录用户的id
+        $topic->save();
 		return redirect()->route('topics.show', $topic->id)->with('message', 'Created successfully.');
 	}
 
