@@ -39,3 +39,6 @@ Route::resource('topics', 'TopicsController', ['only' => ['index', 'show', 'crea
 
 // 话题相关路由
 Route::resource('categories','CategoriesController',['only' => ['show']]);
+
+// Simditor 编辑器的上传图片路由
+Route::post('upload_image','TopicsController@uploadImage')->name('topics.upload_image');
