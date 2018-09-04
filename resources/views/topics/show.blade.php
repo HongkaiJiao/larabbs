@@ -46,15 +46,26 @@
                     {!! $topic->body !!}
                 </div>
                 <!--右侧主话题栏：话题操作按钮-->
+                @can('update', $topic)
                 <div class="operate">
                     <hr>
-                    <a href="{{ route('topics.edit',$topic->id) }}" class="btn btn-default btn-xs" role="button">
+                    <a href="{{ route('topics.edit',$topic->id) }}" class="btn btn-default btn-xs pull-left" role="button">
                         <i class="glyphicon glyphicon-edit"></i> 编辑
                     </a>
-                    <a href="#" class="btn btn-default btn-xs" role="button">
-                        <i class="glyphicon glyphicon-trash"></i> 删除
+
+                    <form action="{{ route('topics.destroy',$topic->id) }}" method="post">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                        <button type="submit" class="btn btn-default btn-xs pull-left" style="margin-left: 6px;">
+                            <i class="glyphicon glyphicon-trash"></i> 删除
+                        </button>
+                    </form>
+
+                    <a href="#"  role="button">
+
                     </a>
                 </div>
+                @endcan
             </div>
         </div>
     </div>
