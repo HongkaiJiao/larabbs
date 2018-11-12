@@ -6,6 +6,12 @@ class Topic extends Model
 {
     protected $fillable = ['title', 'body', 'category_id', 'excerpt', 'slug'];
 
+    // 一篇帖子下有多条回复的一对多关系
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
+
     // 一个话题属于一个分类的一对一关系
     public function category()
     {
