@@ -16,7 +16,8 @@
         "mews/captcha": "~2.0",
         "mews/purifier": "~2.0",
         "overtrue/pinyin": "~3.0",
-        "predis/predis": "~1.0"
+        "predis/predis": "~1.0",
+        "symfony/css-selector": "^4.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "~3.1",
