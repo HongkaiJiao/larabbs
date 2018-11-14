@@ -18,7 +18,12 @@ class RepliesController extends Controller
 
 	public function store(ReplyRequest $request,Reply $reply)
 	{
-        $reply->content = $request->input('content');
+	    // XSS 过滤
+        $reply->content = clean($request->input('content'));
+        // 友好提示
+        if (empty($reply->content)) {
+            return redirect()->back()->with('danger','回复内容错误!');
+        }
         $reply->user_id = Auth::id();
         $reply->topic_id = $request->input('topic_id');
         $reply->save();
