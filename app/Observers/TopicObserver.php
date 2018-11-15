@@ -43,4 +43,13 @@ class TopicObserver
             dispatch( new TranslateSlug($topic));
         }
     }
+
+    /* ★★★在模型监听器中，数据库操作需要避免再次 Eloquent 事件，所以此处我们使用 DB 类进行操作
+     * 即：不可以使用：$topic->replies()->delete();从而再次触发模型监听器的 deleted 事件以至于陷入死循环
+    */
+    public function deleted(Topic $topic)
+    {
+        // 在话题被删除的同时，删除与该话题相关的所有回复
+        \DB::table('replies')->where('topic_id',$topic->id)->delete();
+    }
 }
